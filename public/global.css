@@ -1,3 +1,7 @@
+* {
+	box-sizing: border-box;
+}
+
 html, body {
 	position: relative;
 	width: 100%;
@@ -6,14 +10,53 @@ html, body {
 
 body {
 	color: #333;
+	background: #white;
 	margin: 0;
-	padding: 8px;
+	padding: 0;
+	font-size: 18px;
+	line-height: 1.7;
 	box-sizing: border-box;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
+main {
+	padding: 6rem 5rem 6rem 0;
+	margin-left: 25vw;
+}
+
+article {
+	margin: auto;
+	max-width: 750px;
+	padding-right: 13rem;
+}
+
+article p {
+	position: relative;
+  margin-bottom: 1.7em;
+}
+
+aside {
+	position: fixed;
+  padding: 2rem;
+  width: 22rem;
+  top: 0;
+  left: 0;
+	bottom: 0;
+	background: #9a324a;
+	color: white;
+}
+
+h1 {
+	font-weight: 0;
+	line-height: 1;
+	font-size: 3rem;
+	letter-spacing: .05em;
+	text-transform: uppercase;
+	margin: 0
+}
+
 a {
-	color: rgb(0,100,200);
+	color: white;
 	text-decoration: none;
 }
 
@@ -22,11 +65,26 @@ a:hover {
 }
 
 a:visited {
-	color: rgb(0,80,160);
+	white;
+}
+
+svg {
+	width: 100%
+}
+
+hr {
+	margin: 2rem 0;
+	border-width: 0;
+  border-top: 1px solid #ffffff55;
 }
 
 label {
 	display: block;
+	font-size: 15px;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	font-weight: 600;
+	width: 160px
 }
 
 input, button, select, textarea {
@@ -44,20 +102,171 @@ input:disabled {
 	color: #ccc;
 }
 
+input[type="checkbox"] {
+	position: absolute;
+	left: 0;
+	opacity: 0.01
+}
+
+input[type="checkbox"] + label {
+	position: relative;
+	padding-left: 2.3em;
+	line-height: 1.7;
+	cursor: pointer;
+	user-select: none
+}
+
+input[type="checkbox"] + label:before {
+	content: '';
+  top: 0;
+	left: 0;
+  width: 1.4em;
+  height: 1.4em;
+	position: absolute;
+  background: #ffffff55;
+  border-radius: .2em;
+  transition: all .275s;
+}
+
+input[type="checkbox"]:checked + label:before {
+	background: #3df599
+}
+
 button {
-	color: #333;
+	color: inherit;
 	background-color: #f4f4f4;
 	outline: none;
+	margin-left: -1px;
+	border-radius: 0;
+	background: none;
+	font-weight: bold;
+	padding: .5em .75em;
+	font-size: 20px;
+	margin-bottom: 0;
+	opacity: 0.5;
+	border-color: transparent;
+	transition: all .2s;
+	cursor: pointer;
+	width: 100%
+}
+
+button:hover {
+	opacity: 0.9;
+	background: #ffffff22;
+}
+
+button.border,
+button.active,
+button:focus {
+	opacity: 1;
+	border-color: white;
 }
 
 button:disabled {
 	color: #999;
 }
 
-button:not(:disabled):active {
-	background-color: #ddd;
+.range {
+	color: #eeeeeeaa;
+	font-size: 14px;
+	font-weight: 600;
+	letter-spacing: .15em;
+	user-select: none;
 }
 
-button:focus {
-	border-color: #666;
+.annotation {
+	position: absolute;
+	top: .25rem;
+	width: 200px;
+	left: calc(100% + 5rem);
+	user-select: none;
+	font-size: 12px;
+	opacity: .33;
+}
+
+.button-row {
+	display: grid;
+	justify-items: center;
+	grid-template-columns: repeat(5, 1fr);
+	column-gap: 0;
+	row-gap: 0;
+}
+
+.button-row > * {
+	flex: 1
+}
+
+.flex {
+	display: flex;
+	width: 100%
+}
+
+.flex-col {
+	display: flex;
+	flex-direction: column;
+}
+
+.flex-center {
+	align-items: center;
+	justify-content: center;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.flex-wrap {
+	flex-wrap: wrap;
+}
+
+.py-4 {
+	padding-top: 1rem;
+	padding-bottom: 1rem
+}
+
+.py-4:first-child {
+	padding-top: 0
+}
+
+.w-full {
+	width: 100%
+}
+
+.select-none {
+	user-select: none
+}
+
+nav {
+	font-size: 12px;
+	letter-spacing: .1em;
+	font-weight: 600;
+	text-transform: uppercase;
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: 1.25rem;
+}
+
+nav a {
+	white-space: nowrap;
+	margin-right: 1rem;
+}
+
+#coffee {
+	background: #9a324a;
+	border-radius: 4px;
+	text-align: center;
+	padding: .25rem .5rem;
+	position: fixed;
+	right: 0;
+	top: 1rem;
+	width: 120px;
+	opacity: .85;
+	font-size: 11px;
+	white-space: normal;
+	transition: opacity .5s;
+}
+
+#coffee:hover {
+	opacity: 1;
+	text-decoration: none;	
 }
