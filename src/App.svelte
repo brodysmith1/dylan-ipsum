@@ -11,7 +11,7 @@ let count
 let subset
 
 let config = {
-	n: 1,
+	n: 0,
 	words: {
 		min: 5,
 		max: 200,
@@ -109,7 +109,7 @@ const write = (n) => {
 	<nav>
 		<a href="">About</a>
 		<a href="">Suggestions</a>
-		<a href="">Github</a>
+		<a href="https://github.com/brodysmith1/dylan-ipsum" target="_blank">Github</a>
 		<a id="coffee" href="https://www.buymeacoffee.com/brods" target="_blank">
 			One more cup of coffee
 		</a>
@@ -180,30 +180,45 @@ const write = (n) => {
 <main>
 	<article>
 		{#if !error}
-			{#each text as quote, i (i)}
-				{#if config.headings && !(i % 3)}
-					<h2>
-						{#if config.tags}
-							{wrap(quote.title,"<h2>","</h2>")}
-						{:else}
-							{quote.title}
-						{/if}
-					</h2>
-				{/if}
-				<p>
-					{#if config.tags}
-						{wrap(format(quote.text),"<p>","</p>")}
-					{:else}
-						{format(quote.text)}
-					{/if}
-					{#if config.annotations}
-						<span class="annotation">
-							<em>{quote.title}</em><br>
-							{quote.album} ({quote.year})
-						</span>
-					{/if}
+			{#if !text.length}
+				<p>A random text generator that uses only Bob Dylan lyrics.</p>
+				<p>Lyrics sourced from the 677 songs listed on
+					<a href="https://www.bobdylan.com/" target="_blank">bobdylan.com</a>.
 				</p>
-			{/each}
+				<p>
+					<button
+						class="red border"
+						on:click={() => write(10)}
+					>
+						Get born
+					</button>
+				</p>
+			{:else}
+				{#each text as quote, i (i)}
+					{#if config.headings && !(i % 3)}
+						<h2>
+							{#if config.tags}
+								{wrap(quote.title,"<h2>","</h2>")}
+							{:else}
+								{quote.title}
+							{/if}
+						</h2>
+					{/if}
+					<p>
+						{#if config.tags}
+							{wrap(format(quote.text),"<p>","</p>")}
+						{:else}
+							{format(quote.text)}
+						{/if}
+						{#if config.annotations}
+							<span class="annotation">
+								<em>{quote.title}</em><br>
+								{quote.album} ({quote.year})
+							</span>
+						{/if}
+					</p>
+				{/each}
+			{/if}
 		{:else}
 			No albums released
 			{config.years.max - config.years.min ? [config.years.min,config.years.max].join("–") : "in " + config.years.max}.

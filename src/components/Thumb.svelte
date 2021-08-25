@@ -66,7 +66,8 @@ const drag = (node) => {
   position: absolute;
   border-radius: 50%;
   transform: translate(-50%, 0);
-  border: 1px solid
+  border: 1px solid;
+  cursor: pointer;
 }
 
 .thumb:before {
@@ -79,18 +80,15 @@ const drag = (node) => {
   position: absolute;
   background: inherit;
   border-radius: inherit;
-  transition: transform .3s;
+  transition: all .3s;
 }
   
 .thumb:hover:before {
-  transform: scale(1.25)
+  background: #ffffff44
 }
   
 .thumb.active:before {
-  background: #3df599
-}
-  
-.thumb.active:before {
+  background: #3df599;
   transform: scale(1.5)
 }
   

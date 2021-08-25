@@ -35,6 +35,11 @@ article p {
   margin-bottom: 1.7em;
 }
 
+article a {
+	color: #333;
+	text-decoration: underline;
+}
+
 aside {
 	position: fixed;
   padding: 2rem;
@@ -162,8 +167,15 @@ button:focus {
 	border-color: white;
 }
 
-button:disabled {
-	color: #999;
+button.red.border,
+button.red.active,
+button.red:focus {
+	opacity: 1;
+	color: white;
+	background: #9a324a;
+	letter-spacing: .1em;
+	text-transform: uppercase;
+	border-radius: 5px;
 }
 
 .range {
