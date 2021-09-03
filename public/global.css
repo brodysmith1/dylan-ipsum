@@ -6,6 +6,7 @@ html, body {
 	position: relative;
 	width: 100%;
 	height: 100%;
+	overflow: hidden;
 }
 
 body {
@@ -13,6 +14,7 @@ body {
 	background: #white;
 	margin: 0;
 	padding: 0;
+	overflow: auto;
 	font-size: 18px;
 	line-height: 1.7;
 	box-sizing: border-box;
@@ -47,8 +49,11 @@ aside {
   top: 0;
   left: 0;
 	bottom: 0;
+	z-index: 1;
 	background: #9a324a;
 	color: white;
+	display: flex;
+	flex-direction: column;
 }
 
 h1 {
@@ -83,6 +88,10 @@ hr {
   border-top: 1px solid #ffffff55;
 }
 
+hr.dark {
+	border-color: #333
+}
+
 label {
 	display: block;
 	font-size: 15px;
@@ -90,6 +99,13 @@ label {
 	letter-spacing: 0.1em;
 	font-weight: 600;
 	width: 160px
+}
+
+form input,
+form label,
+form textarea {
+	width: 100%;
+	border-radius: 0
 }
 
 input, button, select, textarea {
@@ -236,6 +252,10 @@ button.red:focus {
 	padding-bottom: 1rem
 }
 
+.p-4 {
+	padding: 1rem
+}
+
 .py-4:first-child {
 	padding-top: 0
 }
@@ -246,6 +266,16 @@ button.red:focus {
 
 .select-none {
 	user-select: none
+}
+
+.bare,
+.bare:hover {
+	text-decoration: none;
+}
+
+.dragging {
+	cursor: grabbing!important;
+	user-select: none;
 }
 
 nav {
@@ -272,7 +302,7 @@ nav a {
 	right: 0;
 	top: 1rem;
 	width: 120px;
-	opacity: .85;
+	opacity: .9;
 	font-size: 11px;
 	white-space: normal;
 	transition: opacity .5s;
@@ -281,4 +311,130 @@ nav a {
 #coffee:hover {
 	opacity: 1;
 	text-decoration: none;	
+}
+
+.scroller {
+	overflow-y: auto;
+  padding: 0;
+  margin: -1rem -1.5rem;
+  position: relative;
+  flex: 1;
+}
+
+.scroller-inner {
+	position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+	padding: 1rem;
+}
+
+.scroller-inner > *:last-child {
+	padding-bottom: 1.5rem
+}
+
+.scroller::-webkit-scrollbar {
+  width: 4px;
+}
+ 
+.scroller::-webkit-scrollbar-track {
+  background: none;
+}
+ 
+.scroller::-webkit-scrollbar-thumb {
+	background: #ffffff55;
+	border-radius: 2px
+}
+
+@media (max-width: 1350px) {
+	
+	aside {
+		right: 0;
+		padding: 1rem 2rem;
+		flex-direction: row;
+		width: auto;
+		height: auto;
+		bottom: unset;
+		justify-content: space-between;
+	}
+	
+	h1 {
+		width: 125px;
+		font-size: 2rem;
+	}
+	
+	#title {
+		justify-content: flex-start;
+	}
+	
+	#title svg {
+		width: 50px;
+		height: auto;
+	}
+	
+	#coffee {
+		bottom: 1rem;
+    top: unset;
+	}
+	
+	nav {
+		flex-wrap: nowrap;
+		margin-top: 0;
+		margin-right: 2rem;
+		align-items: center;
+	}
+}
+
+@media (max-width: 1000px) {
+	
+	main {
+		padding: 7rem 1rem 4rem;
+		margin-left: 0
+	}
+	
+	article {
+		padding: 0
+	}
+	
+	aside {
+		height: 4rem;
+		padding: .5rem 1rem;
+		flex-direction: column;
+		transition: all .3s
+	}
+	
+	aside.active {
+		height: 100vh;
+	}
+	
+	h1 {
+		white-space: nowrap;
+		width: unset;
+		font-size: 1.5rem;
+	}
+	
+	#title {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+	}
+	
+	.scroller {
+		background: #9a314a;
+	}
+	
+	.scroller-inner {
+		padding: 0 2rem;
+		max-width: 500px;
+		margin: auto;
+	}
+	
+	.annotation {
+		position: unset;
+		display: block;
+		margin-top: .5rem;	
+	}
+
 }
