@@ -457,7 +457,7 @@ article h2 {
 .btn-red {
 	opacity: 1;
 	z-index: 10;
-	color: #fffc;
+	color: white;
 	font-size: 1rem;
 	cursor: pointer;
 	text-align: center;
@@ -468,7 +468,6 @@ article h2 {
 
 .btn-red:hover {
 	background: #a84c60;
-	color: #fff;
 }
 
 @media (max-width: 1350px) {
