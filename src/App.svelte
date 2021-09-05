@@ -219,6 +219,9 @@ $: mobile = vw < 1000
 		</svg>
 	</a>
 	
+	<a id="coffee" class="bare upper" href="https://www.buymeacoffee.com/brods" target="_blank">
+		One more cup of coffee
+	</a>
 	
 	{#if !mobile || active}
 	
@@ -232,9 +235,6 @@ $: mobile = vw < 1000
 				href="javascript:;"
 			>Suggestions</a>
 			<a href="https://github.com/brodysmith1/dylan-ipsum" target="_blank">Github</a>
-			<a id="coffee" href="https://www.buymeacoffee.com/brods" target="_blank">
-				One more cup of coffee
-			</a>
 		</nav>
 		
 		<hr>
