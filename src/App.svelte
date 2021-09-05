@@ -1,7 +1,8 @@
 <script>
 import { tick } from 'svelte'
 import { fade } from 'svelte/transition'
-import {rand, sample, between, on} from '../scripts/utils.js'
+import { submit } from '../scripts/form'
+import {rand, sample, between, on} from '../scripts/utils'
 
 import Input from "./components/Input.svelte"
 import Modal from "./components/Modal.svelte"
@@ -11,13 +12,16 @@ export let songs
 
 let vw
 let text = []
+let form
 let error
 let count
 let subset
 let active
 let copied
 let timeout
+let submitted
 let highlight
+let formerror
 
 let modalAbout
 let modalSuggest
@@ -49,6 +53,17 @@ let config = {
 	html: false,
 	headings: true,
 	annotations: true,
+}
+
+const onSubmit = e => {
+	let data = submit(e)
+	
+	if (data.error) {
+		formerror = data.error
+	} else {
+		submitted = true
+		formerror = false
+	}
 }
 
 const menu = (e) => {
@@ -337,9 +352,9 @@ $: mobile = vw < 1000
 			{#if text.length}<hr class="dark">{/if}
 			<button
 				class="btn-red upper"
-				on:click={(e) => write(e, 10)}
+				on:click={(e) => write(e, config.n || 10)}
 			>
-				{text.length ? "Give me more" : "Get born"}
+				{text.length ? "Give me another " + config.n : "Get born"}
 			</button>	
 		{:else}
 			No albums released
@@ -367,20 +382,33 @@ $: mobile = vw < 1000
 		</p>
 		<p>Got an idea for new feature or platform? Just want to say hello? I might be in Tangier, but try me:</p>
 		<hr>
-		<form action="">
-			<label type="text">Name
-				<input type="text" placeholder="Robert Zimmerman">
-			</label>
-			<label type="text">Email
-				<input type="text" placeholder="dylan@budokan.com">
-			</label>
-			<label type="text">Suggestion
-				<textarea rows=4 placeholder="Give me some milk or else go home."></textarea>
-			</label>
-			<button class="border btn-red upper">
-				Step it up and go
-			</button>
-		</form>
+		{#if !submitted}
+			<form
+				class="gform"
+				bind:this={form}
+				on:submit={onSubmit}
+			>
+				<label type="text">Name
+					<input name="name" type="text" placeholder="Robert Zimmerman">
+				</label>
+				<label type="text">Email
+					<input name="email" type="text" placeholder="dylan@budokan.com">
+				</label>
+				<label type="text">Suggestion
+					<textarea name="message" rows=4 placeholder="Give me some milk or else go home."></textarea>
+				</label>
+				{#if formerror}
+					<p class="upper" style="color: #ff9; margin: 0 0 .5rem">{formerror}</p>
+				{/if}
+				<button class="border btn-red upper">
+					Step it up and go
+				</button>
+			</form>
+		{:else}
+			<div id="formsubmit">
+				<p>Thanks. Now don’t send me no more letters, no. Not&nbsp;unless&nbsp;you&nbsp;mail them from Desolation Row.</p>
+			</div>
+		{/if}
 	</Modal>
 {/if}
 

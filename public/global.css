@@ -436,6 +436,14 @@ nav a {
 	white-space: nowrap;
 }
 
+#formsubmit {
+	background: white;
+	color: #9a324a;
+	padding: .5rem 1.5rem;
+	font-weight: 500;
+	text-align: center;
+}
+
 .highlight p,
 .highlight h2 {
 	background: #3df59922
