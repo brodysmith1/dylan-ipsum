@@ -4,25 +4,34 @@
 
 html, body {
 	position: relative;
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
+	overscroll-behavior: none;
+	scroll-behavior: smooth;
 }
 
 body {
 	color: #333;
-	background: #white;
 	margin: 0;
 	padding: 0;
-	overflow: auto;
 	font-size: 18px;
 	line-height: 1.7;
 	box-sizing: border-box;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
+body::-webkit-scrollbar {
+  width: 6px;
+}
+ 
+body::-webkit-scrollbar-track {
+  background: none;
+}
+ 
+body::-webkit-scrollbar-thumb {
+	background: #9a324a;
+}
+
 main {
-	padding: 6rem 5rem 6rem 0;
+	padding: 4rem 5rem 4rem 0;
 	margin-left: 25vw;
 }
 
@@ -66,8 +75,7 @@ h1 {
 }
 
 a {
-	color: white;
-	text-decoration: none;
+	color: inherit;
 }
 
 a:hover {
@@ -75,7 +83,18 @@ a:hover {
 }
 
 a:visited {
-	white;
+	color: inherit;
+}
+
+a.blockout {
+	background: white;
+	transition: background .1s;
+	text-decoration: none;
+	font-weight: 600;
+}
+
+a.blockout:hover {
+	background: transparent
 }
 
 svg {
@@ -89,7 +108,8 @@ hr {
 }
 
 hr.dark {
-	border-color: #333
+	border-color: #333;
+	opacity: .33
 }
 
 label {
@@ -123,6 +143,20 @@ input:disabled {
 	color: #ccc;
 }
 
+textarea,
+input[type="text"] {
+	background: #fffe;
+	border: none
+}
+
+textarea:focus,
+textarea:focus-visible,
+input:focus,
+input:focus-visible {
+	outline: none;
+	background: white
+}
+
 input[type="checkbox"] {
 	position: absolute;
 	left: 0;
@@ -134,7 +168,7 @@ input[type="checkbox"] + label {
 	padding-left: 2.3em;
 	line-height: 1.7;
 	cursor: pointer;
-	user-select: none
+	user-select: none;
 }
 
 input[type="checkbox"] + label:before {
@@ -151,6 +185,15 @@ input[type="checkbox"] + label:before {
 
 input[type="checkbox"]:checked + label:before {
 	background: #3df599
+}
+
+
+.toggles label:nth-of-type(odd) {
+	width: 170px;
+}
+
+.toggles label:nth-of-type(even) {
+	width: 100px;
 }
 
 button {
@@ -268,6 +311,24 @@ button.red:focus {
 	user-select: none
 }
 
+.cursor-ptr {
+	cursor: pointer;
+}
+
+.inset-0 {
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.upper {
+	font-size: 14px;
+	letter-spacing: .1em;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+
 .bare,
 .bare:hover {
 	text-decoration: none;
@@ -291,6 +352,7 @@ nav {
 nav a {
 	white-space: nowrap;
 	margin-right: 1rem;
+	text-decoration: none;
 }
 
 #coffee {
@@ -302,15 +364,14 @@ nav a {
 	right: 0;
 	top: 1rem;
 	width: 120px;
-	opacity: .9;
 	font-size: 11px;
 	white-space: normal;
-	transition: opacity .5s;
+	transition: background .5s;
 }
 
 #coffee:hover {
-	opacity: 1;
 	text-decoration: none;	
+	background: #a84c60;
 }
 
 .scroller {
@@ -345,6 +406,61 @@ nav a {
 .scroller::-webkit-scrollbar-thumb {
 	background: #ffffff55;
 	border-radius: 2px
+}
+
+#introduction h2 {
+	margin-top: 0;
+	font-size: 2.5em;
+	position: relative;
+}
+
+#introduction h2 .annotation{
+	top: unset;
+	bottom: 1rem;
+	font-weight: 400;
+}
+
+#tooltip {
+	position: fixed;
+	background: #9a324a;
+	padding: .5rem 1rem;
+	text-transform: uppercase;
+	letter-spacing: .1em;
+	font-size: 14px;
+	font-weight: 600;
+	z-index: 200;
+	color: white;
+	transform: translate(-50%, -110%);
+	box-shadow: 0 0 1rem #fff8;
+	pointer-events: none;
+	white-space: nowrap;
+}
+
+.highlight p,
+.highlight h2 {
+	background: #3df59922
+}
+
+article p,
+article h2 {
+	transition: background .2s;
+}
+
+.btn-red {
+	opacity: 1;
+	z-index: 10;
+	color: #fffc;
+	font-size: 1rem;
+	cursor: pointer;
+	text-align: center;
+	background: #9a324a;
+	padding: .75rem;
+	transition: all .3s;
+}
+
+.btn-red:hover {
+	background: #a84c60;
+	color: #fff;
 }
 
 @media (max-width: 1350px) {

@@ -1,16 +1,13 @@
 <script>
+import { tick } from 'svelte'
+import { fade } from 'svelte/transition'
+import {rand, sample, between, on} from '../scripts/utils.js'
+
 import Input from "./components/Input.svelte"
-import Slider from "./components/Slider.svelte"
 import Modal from "./components/Modal.svelte"
-import {rand, sample, between} from '../scripts/utils.js'
+import Slider from "./components/Slider.svelte"
 
 export let songs
-
-console.log(
-	songs.map(s => s.lyrics).flat().flat().join(" ").split(" ").length
-)
-
-console.log(songs.length)
 
 let vw
 let text = []
@@ -18,9 +15,23 @@ let error
 let count
 let subset
 let active
+let copied
+let timeout
+let highlight
 
 let modalAbout
 let modalSuggest
+
+let tooltip = {
+	text: "Copied text!",
+	active: false,
+	duration: 1000,
+	hide: async (e) => {
+		await tick()
+		e && followPointer(e, tooltip.element)
+		tooltip.active = false
+	}
+}
 
 let config = {
 	n: 0,
@@ -34,15 +45,15 @@ let config = {
 		max: 2020,
 		range: [1962, 2020]
 	},
-	tags: false,
+	copy: false,
+	html: false,
 	headings: true,
-	markdown: false,
 	annotations: true,
 }
 
 const menu = (e) => {
 	if (mobile) {
-		e.preventDefault()
+		e && e.preventDefault()
 		active = !active
 	}
 }
@@ -57,16 +68,50 @@ const format = a =>
 	})
 	.join(" ")
 
-// Copy result to clipboard
-const copy = () => {
-	if (!text.length) return
-	let content = text
-		.map(p => 
-			format(p.text)
-		)
+const followPointer = (ev, el) => {
+	el.style.top	= ev.clientY + "px"
+	el.style.left = ev.clientX + "px"
+}
 
+// Copy result to clipboard
+const copy = async (e, inv) => {
+	if (!text.length || !(config.copy ^ inv) ) return
+	
+	let content, unfollowPointer
+	
+	tooltip.text = "Copied text!"
+	tooltip.active = true
+	highlight = true
+	await tick()
+
+	followPointer(e, tooltip.element)
+	unfollowPointer = on(
+		document.body,
+		'pointermove',
+		(e) => followPointer(e, tooltip.element)
+	)
+	
+	content = text
+		.map((song,i) =>
+			!(i % 3) && config.headings
+				? [song.title, format(song.text)]
+				: format(song.text)
+		)
+		.flat()
+		.map((p,i) => config.html
+				? (i % 4)
+					? wrap(p,"<p>","</p>")
+					: wrap(p,"<h2>","</h2>")
+				: p
+		)
+		.join("\r\n\r\n")
+	
 	navigator.clipboard.writeText(content)
-	alert('copied!')
+	tooltip.hide()
+	
+	clearTimeout(timeout)
+	setTimeout(unfollowPointer, tooltip.duration)
+	timeout = setTimeout(() => highlight = false, tooltip.duration)
 }
 
 // Extract songs released within selected years
@@ -106,7 +151,7 @@ const find = () => {
 	return Object.assign(song, {text: extract(song)}) 
 }
 
-const write = (n) => {
+const write = (e, n, toggleMenu) => {
 	config.n = n
 	subset = filterByYear()
 	if (error) return
@@ -114,6 +159,21 @@ const write = (n) => {
 	text = new Array(n)
 		.fill(0)
 		.map(() => find())
+		
+	copy(e)
+	
+	if (mobile && toggleMenu) {
+		tooltip.active = true
+		tooltip.text = "Comin’ right up!"
+		setTimeout(menu, 600)
+		tooltip.hide(e)
+	}
+	
+	window.scrollTo({
+	  top: 0,
+	  left: 0,
+	  behavior: 'smooth'
+	})
 }
 
 $: mobile = vw < 1000
@@ -150,11 +210,11 @@ $: mobile = vw < 1000
 		<nav>
 			<a
 				on:click|preventDefault={() => modalAbout = true}
-				href=""
+				href="javascript:;"
 			>About</a>
 			<a
 				on:click|preventDefault={() => modalSuggest = true}
-				href=""
+				href="javascript:;"
 			>Suggestions</a>
 			<a href="https://github.com/brodysmith1/dylan-ipsum" target="_blank">Github</a>
 			<a id="coffee" href="https://www.buymeacoffee.com/brods" target="_blank">
@@ -171,7 +231,7 @@ $: mobile = vw < 1000
 						<div class="button-row w-full">
 							{#each new Array(10) as b, i}
 								<button
-									on:click={() => write(i + 1)}
+									on:click={(e) => {write(e, i + 1, true)}}
 									class:active={config.n === i + 1}
 								>
 									{i + 1}
@@ -190,7 +250,7 @@ $: mobile = vw < 1000
 							track={config.words.range}
 							bind:min={config.words.min}
 							bind:max={config.words.max}
-							on:end={() => write(config.n)}
+							on:end={(e) => write(e, config.n)}
 						/>
 					</Input>
 					
@@ -204,20 +264,22 @@ $: mobile = vw < 1000
 							track={config.years.range}
 							bind:min={config.years.min}
 							bind:max={config.years.max}
-							on:end={() => write(config.n)}
+							on:end={(e) => write(e, config.n)}
 						/>
 					</Input>
 				</div>
 			
 				<hr>
 				
-				<div class="flex flex-wrap">
-					<input id="in-4" type="checkbox" bind:checked={config.annotations}>
-					<label for="in-4">Annotations?</label>
-					<input id="in-1" type="checkbox" bind:checked={config.headings}>
-					<label for="in-1">Headings?</label>
-					<input id="in-3" type="checkbox" bind:checked={config.tags}>
-					<label for="in-3">HTML?</label>
+				<div class="toggles flex flex-wrap">
+					<input id="in-1" type="checkbox" bind:checked={config.annotations}>
+					<label for="in-1">Song labels</label>
+					<input id="in-2" type="checkbox" bind:checked={config.headings} on:click={copy}>
+					<label for="in-2">Headings</label>
+					<input id="in-4" type="checkbox" bind:checked={config.copy} on:click={(e) => copy(e, true)}>
+					<label for="in-4">Autocopy</label>
+					<input id="in-3" type="checkbox" bind:checked={config.html} on:click={copy}>
+					<label for="in-3">HTML</label>
 				</div>
 			</div>
 		</div>
@@ -228,35 +290,29 @@ $: mobile = vw < 1000
 </aside>
 
 <main>
-	<article on:click={copy}>
+	<article class:highlight>
 		{#if !error}
 			{#if !text.length}
 				<div id="introduction">
-					<h2 style="font-size: 2.5em">Fill your designs with the greatest lyrics ever written.</h2>
-					<hr class="dark">
-					<h2>Or, just put your Dylan knowledge to the test.</h2>
-					<p>Generate random text from the Bob Dylan compendium.</p>
-					
-					<!-- <p>The words of the poet laureate of rock 'n' roll. The voice of the promise of the '60s counter-culture. The guy who forced folk into bed with rock. Who donned make-up in the '70s and disappeared into a haze of substance abuse. Who emerged to find Jesus. Who was written off as a has-been by the end of the '80s and who suddenly shifted gears, releasing some of the strongest music of his career beginning in the late '90s. Ladies and gentlemen — Columbia recording artist Bob Dylan!
-					</p> -->
+					<h2>Fill your designs with the greatest lyrics ever written.
+						<span class="annotation">And maybe some of the worst. With 677 songs there's bound to&nbsp;be some stinkers.</span>
+					</h2>
 					<p>
-						All lyrics from Bob's 677 songs are sourced from
-						<a href="https://www.bobdylan.com/" target="_blank">bobdylan.com</a>.
 					</p>
-					<!-- <p>
-						<button
-							class="red border"
-							on:click={() => write(10)}
-						>
-							Get born
-						</button>
-					</p> -->
+					<hr class="dark">
+					<p>Use this tool to generate random text packed with poetic genius. Or just put your Dylan knowledge to the test and explore his incredible catalogue in a new way.</p>
+					<p>
+						All lyrics from Bob’s 677 songs are pulled from
+						<a href="https://www.bobdylan.com/" target="_blank">bobdylan.com</a> —
+						from 1962’s <em>Bob Dylan</em> through to 2020’s <em>Rough and Rowdy Ways</em>.
+					</p>
+					<p>So, know your songs well before you start singing. Because something is happening here, and it’s time you learn what it is.</p>				
 				</div>
 			{:else}
 				{#each text as quote, i (i)}
 					{#if config.headings && !(i % 3)}
 						<h2>
-							{#if config.tags}
+							{#if config.html}
 								{wrap(quote.title,"<h2>","</h2>")}
 							{:else}
 								{quote.title}
@@ -264,7 +320,7 @@ $: mobile = vw < 1000
 						</h2>
 					{/if}
 					<p>
-						{#if config.tags}
+						{#if config.html}
 							{wrap(format(quote.text),"<p>","</p>")}
 						{:else}
 							{format(quote.text)}
@@ -278,6 +334,13 @@ $: mobile = vw < 1000
 					</p>
 				{/each}
 			{/if}
+			{#if text.length}<hr class="dark">{/if}
+			<button
+				class="btn-red upper"
+				on:click={(e) => write(e, 10)}
+			>
+				{text.length ? "Give me more" : "Get born"}
+			</button>	
 		{:else}
 			No albums released
 			{config.years.max - config.years.min ? [config.years.min,config.years.max].join("–") : "in " + config.years.max}.
@@ -285,6 +348,15 @@ $: mobile = vw < 1000
 	</article>
 </main>
 
+{#if tooltip.active}
+	<div
+		id="tooltip"
+		bind:this={tooltip.element}
+		out:fade={{duration: 300, delay: tooltip.duration - 200}}
+	>
+		{tooltip.text}
+	</div>
+{/if}
 
 {#if modalSuggest}
 	<Modal close={() => modalSuggest = false}>
@@ -293,7 +365,7 @@ $: mobile = vw < 1000
 			Now, Bob, I ain’t lookin’ to analyze you, categorize you, finalize you or advertise you.
 			But this was a fun project and I am lookin’ to create new ways for people to engage with your work.
 		</p>
-		<p>Got an idea for new feature or platform? Just want to say hello? I might be in Tangier, but try me anyway:</p>
+		<p>Got an idea for new feature or platform? Just want to say hello? I might be in Tangier, but try me:</p>
 		<hr>
 		<form action="">
 			<label type="text">Name
@@ -305,7 +377,7 @@ $: mobile = vw < 1000
 			<label type="text">Suggestion
 				<textarea rows=4 placeholder="Give me some milk or else go home."></textarea>
 			</label>
-			<button class="border red">
+			<button class="border btn-red upper">
 				Step it up and go
 			</button>
 		</form>
@@ -314,14 +386,12 @@ $: mobile = vw < 1000
 
 {#if modalAbout}
 	<Modal close={() => modalAbout = false}>
-		<!-- <h1>About</h1> -->
-		<h2>Oh, it’s about, uh, all kinds of different things – rats, balloons.</h2>
-		<hr>
-		<p>489 of the 677 songs on <a href="https://www.bobdylan.com/songs" target="_blank">bobdylan.com</a> include uploaded lyrics. This includes 136,392 words, 520 mentions of love, 52 mentions of law, and 5 mentions of ... country pie.</p>
-		<p>This website was created by Brody Smith.</p>
+		<h2>Oh, it’s about, uh, all kinds of different things</h2>
 		<p>
-			Download a JSON file containing 
-			<a download href="/downloads/songs.json">all songs with lyrics</a>.
+			<a class="blockout" href="https://twitter.com/__brodysmith" target="_blank">Brody Smith</a> had a whopping good time building this website. If you have any ideas to make this site better, please submit a <a href="javascript:;" on:click={() => {modalAbout = false; modalSuggest = true;}}>suggestion</a>.
 		</p>
+		<p>Bob's catalogue includes 136,392 words, 520 mentions of <em>love</em>, 52 mentions of <em>law</em>, and 5 mentions of ... <em>country pie</em>.*</p>
+		<p>You can download the lyric database as a  <a download href="/downloads/songs.json">JSON file</a>.</p>
+		<p style="font-size: 14px">* 188/677 songs on <a href="https://www.bobdylan.com/songs" target="_blank">bobdylan.com</a> have no lyrics listed.</p>
 	</Modal>
 {/if}
