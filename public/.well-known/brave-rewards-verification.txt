@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: dylanlyrics.app
+Token: 702aa8fc409a71fd7c4456d384a1d4532ab1f81a871c1101b671bdb46c8a9493
