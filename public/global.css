@@ -109,7 +109,11 @@ hr {
 
 hr.dark {
 	border-color: #333;
-	opacity: .33
+	opacity: .33;
+}
+
+p + hr.dark {
+	margin: 4rem 0;
 }
 
 label {
@@ -462,8 +466,12 @@ article h2 {
 	cursor: pointer;
 	text-align: center;
 	background: #9a324a;
-	padding: .75rem;
+	padding: 1rem;
 	transition: all .3s;
+}
+
+#introduction + .btn-red {
+	margin-top: 1rem
 }
 
 .btn-red:hover {

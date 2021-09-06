@@ -312,8 +312,6 @@ $: mobile = vw < 1000
 					<h2>Fill your designs with the greatest lyrics ever written.
 						<span class="annotation">And maybe some of the worst. With 677 songs there's bound to&nbsp;be some stinkers.</span>
 					</h2>
-					<p>
-					</p>
 					<hr class="dark">
 					<p>Use this tool to generate random text packed with poetic genius. Or just put your Dylan knowledge to the test and explore his incredible catalogue in a new way.</p>
 					<p>
@@ -354,7 +352,7 @@ $: mobile = vw < 1000
 				class="btn-red upper"
 				on:click={(e) => write(e, config.n || 10)}
 			>
-				{text.length ? "Give me another " + config.n : "Get born"}
+				{text.length ? "Give me another" + (config.n > 1 ? " " + config.n : "" ) : "Get born"}
 			</button>	
 		{:else}
 			No albums released
@@ -415,6 +413,7 @@ $: mobile = vw < 1000
 {#if modalAbout}
 	<Modal close={() => modalAbout = false}>
 		<h2>Oh, it’s about, uh, all kinds of different things</h2>
+		<hr>
 		<p>
 			<a class="blockout" href="https://twitter.com/__brodysmith" target="_blank">Brody Smith</a> had a whopping good time building this website. If you have any ideas to make this site better, please submit a <a href="javascript:;" on:click={() => {modalAbout = false; modalSuggest = true;}}>suggestion</a>.
 		</p>
