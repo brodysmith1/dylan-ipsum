@@ -2,7 +2,8 @@
 import { tick } from 'svelte'
 import { fade } from 'svelte/transition'
 import { submit } from '../scripts/form'
-import {rand, sample, between, on} from '../scripts/utils'
+import { format, wrap } from '../scripts/string'
+import { rand, sample, between, on } from '../scripts/utils'
 
 import Input from "./components/Input.svelte"
 import Modal from "./components/Modal.svelte"
@@ -26,17 +27,6 @@ let formerror
 let modalAbout
 let modalSuggest
 
-let tooltip = {
-	text: "Copied text!",
-	active: false,
-	duration: 1000,
-	hide: async (e) => {
-		await tick()
-		e && followPointer(e, tooltip.element)
-		tooltip.active = false
-	}
-}
-
 let config = {
 	n: 0,
 	words: {
@@ -55,6 +45,18 @@ let config = {
 	annotations: true,
 }
 
+let tooltip = {
+	text: "Copied text!",
+	active: false,
+	duration: 1000,
+	hide: async (e) => {
+		await tick()
+		e && followPointer(e, tooltip.element)
+		tooltip.active = false
+	}
+}
+
+// Suggestion form event handler
 const onSubmit = e => {
 	let data = submit(e)
 	
@@ -66,6 +68,7 @@ const onSubmit = e => {
 	}
 }
 
+// Toggle menu, for mobile only
 const menu = (e) => {
 	if (mobile) {
 		e && e.preventDefault()
@@ -73,16 +76,7 @@ const menu = (e) => {
 	}
 }
 
-const wrap = (str,a,b) => `${a}${str}${b}`
-	
-// Format array of songlines into punctuated sentences
-const format = a =>
-	a.map((str, i) => {
-		if (i === a.length - 1) str.replace(/[,;]$/, ".")
-		return str.match(/[^,!?:;\.(\.”)(\.")]$/) ? `${str}.` : str
-	})
-	.join(" ")
-
+// For tooltip, bind position to pointer 
 const followPointer = (ev, el) => {
 	el.style.top	= ev.clientY + "px"
 	el.style.left = ev.clientX + "px"
@@ -136,7 +130,9 @@ const filterByYear = () => {
 	return list
 }
 
-// Extract paragraph from song
+// Extract a random paragraph from song
+// If no verses pass the length validity test,
+// Merge all verses and slice the length to be within range
 const extract = (song) => {
 
 	let validParagraphs = song.lyrics.filter((p,i) => {
@@ -144,8 +140,6 @@ const extract = (song) => {
 		return between(config.words.min, config.words.max, wordcount)
 	})
 
-	// If no paragraphs pass validity test
-	// Merge all lyrics and slice to somewhere within range
 	if (!validParagraphs.length) {
 		let n = config.words.min + (config.words.max - config.words.min) * Math.random()
 		return song.lyrics
@@ -160,12 +154,15 @@ const extract = (song) => {
 	
 	return sample(validParagraphs)
 }
-	
+
+// Pluck a random song within year range
 const find = () => {
 	let song = sample(subset)
 	return Object.assign(song, {text: extract(song)}) 
 }
 
+// Update text to n paragraphs from n randomly selected songs
+// Copy result to clipboard and if on mobile, close the menu
 const write = (e, n, toggleMenu) => {
 	config.n = n
 	subset = filterByYear()
@@ -198,7 +195,6 @@ $: mobile = vw < 1000
 <svelte:window bind:innerWidth={vw} />
 
 <aside class:active>
-	
 
 	<a
 		id="title"
@@ -298,9 +294,7 @@ $: mobile = vw < 1000
 				</div>
 			</div>
 		</div>
-		
 	{/if}
-		
 	
 </aside>
 
