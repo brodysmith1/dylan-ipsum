@@ -1,7 +1,8 @@
 # Dylan Ipsum: Generate random Bob Dylan lyrics
 
 This is the codebase for the [dylanlyrics.app](https://www.dylanlyrics.app/) website.
-Also available as an [npm package](https://github.com/brodysmith1/dylan-ipsum-npm) for easy integration into your web projects.
+
+Also available as an [npm package](https://github.com/brodysmith1/dylan-ipsum-npm), if that's your thing.
 
 <hr>
 

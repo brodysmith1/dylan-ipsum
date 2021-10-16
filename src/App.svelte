@@ -313,7 +313,8 @@ $: mobile = vw < 1000
 						<a href="https://www.bobdylan.com/" target="_blank">bobdylan.com</a> —
 						from 1962’s <em>Bob Dylan</em> through to 2020’s <em>Rough and Rowdy Ways</em>.
 					</p>
-					<p>So, know your songs well before you start singing. Because something is happening here, and it’s time you learn what it is.</p>				
+					<p>So, know your songs well before you start singing. Because something is happening here, and it’s time you learn what it is.</p>
+					<p>Also available as an <a href="https://github.com/brodysmith1/dylan-ipsum-npm" target="_blank">npm package</a>, if that's your thing.</p>
 				</div>
 			{:else}
 				{#each text as quote, i (i)}
@@ -409,10 +410,11 @@ $: mobile = vw < 1000
 		<h2>Oh, it’s about, uh, all kinds of different things</h2>
 		<hr>
 		<p>
-			<a class="blockout" href="https://twitter.com/__brodysmith" target="_blank">Brody Smith</a> had a whopping good time building this website. If you have any ideas to make this site better, please submit a <a href="javascript:;" on:click={() => {modalAbout = false; modalSuggest = true;}}>suggestion</a>.
+			<a class="blockout" href="https://brody.fyi/" target="_blank">Brody Smith</a> had a whopping good time building this website. If you have any ideas to make this site better, please submit a <a href="javascript:;" on:click={() => {modalAbout = false; modalSuggest = true;}}>suggestion</a>.
 		</p>
 		<p>Bob's catalogue includes 136,392 words, 520 mentions of <em>love</em>, 52 mentions of <em>law</em>, and 5 mentions of ... <em>country pie</em>.*</p>
-		<p>You can download the lyric database as a  <a download href="/downloads/songs.json">JSON file</a>.</p>
+		<p>Also available as an <a href="https://github.com/brodysmith1/dylan-ipsum-npm" target="_blank">npm package</a>, if that's your thing.</p>
+		<p>Download the lyric database as a <a download href="/downloads/songs.json">JSON file</a>.</p>
 		<p style="font-size: 14px">* 188/677 songs on <a href="https://www.bobdylan.com/songs" target="_blank">bobdylan.com</a> have no lyrics listed.</p>
 	</Modal>
 {/if}
