@@ -403,13 +403,13 @@ $: mobile = vw < 1000
 
 {#if modalAbout}
 	<Modal close={() => modalAbout = false}>
-		<h2>Oh, it’s about, uh, all kinds of different things</h2>
-		<hr>
+		<!-- <h2>Too much information about nothin</h2>
+		<hr> -->
+		<p>Bob's catalogue includes 136,392 words, 520 mentions of <b>love</b>, 52 mentions of <b>law</b>, and 5 mentions of <b>country pie</b>. <span class="annotation" style="display: inline">(Note: 188/677 songs on <a href="https://www.bobdylan.com/songs" target="_blank">bobdylan.com</a> have no lyrics listed.)</span></p>
 		<p>
 			<span class="border">Brody Smith 👨‍💻</span> had a whopping good time building this website. If you have any ideas to make this site better, please reach out on his <a href="https://brody.fyi/">website</a>.
 		</p>
-		<p>Bob's catalogue includes 136,392 words, 520 mentions of <em>love</em>, 52 mentions of <em>law</em>, and 5 mentions of ... <em>country pie</em>. <span class="annotation">(188/677 songs on <a href="https://www.bobdylan.com/songs" target="_blank">bobdylan.com</a> have no lyrics listed.)</span></p>
-		<p>Also available as an <a href="https://github.com/brodysmith1/dylan-ipsum-npm" target="_blank">npm package</a>, if that's your thing.</p>
-		<a class="bare" download href="/downloads/songs.json"><button>Download json file of all lyrics &darr;</button></a>
+		<p>Dylan Ipsum is also available as an <a href="https://github.com/brodysmith1/dylan-ipsum-npm" target="_blank">npm package</a>, if that's your thing.</p>
+		<a class="bare" download href="/downloads/songs.json"><button class="border" style="margin-top: 1.75rem;">Download json file of all lyrics &darr;</button></a>
 	</Modal>
 {/if}
