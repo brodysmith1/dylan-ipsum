@@ -366,7 +366,7 @@ $: mobile = vw < 1000
 	</div>
 {/if}
 
-{#if modalSuggest}
+{#if false}
 	<Modal close={() => modalSuggest = false}>
 		<h2>What to do with a database of Dylan lyrics?</h2>
 		<p>
@@ -410,11 +410,10 @@ $: mobile = vw < 1000
 		<h2>Oh, it’s about, uh, all kinds of different things</h2>
 		<hr>
 		<p>
-			<a class="blockout" href="https://brody.fyi/" target="_blank">Brody Smith</a> had a whopping good time building this website. If you have any ideas to make this site better, please submit a <a href="javascript:;" on:click={() => {modalAbout = false; modalSuggest = true;}}>suggestion</a>.
+			<span class="border">Brody Smith 👨‍💻</span> had a whopping good time building this website. If you have any ideas to make this site better, please reach out on his <a href="https://brody.fyi/">website</a>.
 		</p>
-		<p>Bob's catalogue includes 136,392 words, 520 mentions of <em>love</em>, 52 mentions of <em>law</em>, and 5 mentions of ... <em>country pie</em>.*</p>
+		<p>Bob's catalogue includes 136,392 words, 520 mentions of <em>love</em>, 52 mentions of <em>law</em>, and 5 mentions of ... <em>country pie</em>. <span class="annotation">(188/677 songs on <a href="https://www.bobdylan.com/songs" target="_blank">bobdylan.com</a> have no lyrics listed.)</span></p>
 		<p>Also available as an <a href="https://github.com/brodysmith1/dylan-ipsum-npm" target="_blank">npm package</a>, if that's your thing.</p>
-		<p>Download the lyric database as a <a download href="/downloads/songs.json">JSON file</a>.</p>
-		<p style="font-size: 14px">* 188/677 songs on <a href="https://www.bobdylan.com/songs" target="_blank">bobdylan.com</a> have no lyrics listed.</p>
+		<a class="bare" download href="/downloads/songs.json"><button>Download json file of all lyrics &darr;</button></a>
 	</Modal>
 {/if}
