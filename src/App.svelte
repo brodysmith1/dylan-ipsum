@@ -226,10 +226,6 @@ $: mobile = vw < 1000
 				on:click|preventDefault={() => modalAbout = true}
 				href="javascript:;"
 			>About</a>
-			<a
-				on:click|preventDefault={() => modalSuggest = true}
-				href="javascript:;"
-			>Suggestions</a>
 			<a href="https://github.com/brodysmith1/dylan-ipsum" target="_blank">Github</a>
 		</nav>
 		
