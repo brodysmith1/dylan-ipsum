@@ -1,6 +1,6 @@
 # Dylan Ipsum: Generate random Bob Dylan lyrics
 
-This is the codebase for the [Dylan Ipsum](https://brody.fyi/dylan-ipsum) website.
+This is the codebase for the [Dylan Ipsum](https://brody.fyi/tools/dylan-ipsum) website.
 
 Also available as an [npm package](https://github.com/brodysmith1/dylan-ipsum-npm), if that's your thing.
 
@@ -28,7 +28,7 @@ npm run build
 
 ### Download the songs database
 
-First step is to <a href="https://www.dylanlyrics.app/downloads/songs.json" download>download the JSON file</a>.
+You can <a href="https://brody.fyi/tools/dylan-ipsum/downloads/songs.json" download>download the JSON file</a>.
 
 If there are future releases or updates to <a href="https://www.bobdylan.com/">Bob's website</a> and you'd like to rescrape, you can do so via `data/scrape.js`. Please run this responsibly and only if you absolutely need to:
 
