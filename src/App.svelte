@@ -3,7 +3,7 @@ import { tick } from 'svelte'
 import { fade } from 'svelte/transition'
 import { submit } from '../scripts/form'
 import { format, wrap } from '../scripts/string'
-import { rand, sample, between, on } from '../scripts/utils'
+import { sample, between, on } from '../scripts/utils'
 
 import Input from "./components/Input.svelte"
 import Modal from "./components/Modal.svelte"
@@ -39,7 +39,7 @@ let config = {
 		max: 2020,
 		range: [1962, 2020]
 	},
-	copy: false,
+	copy: true,
 	html: false,
 	headings: true,
 	annotations: true,
@@ -199,6 +199,7 @@ $: mobile = vw < 1000
 	<a
 		id="title"
 		class="flex-center flex bare"
+		data-tooltip="Back to brody.fyi"
 		href="/"
 	>
 		<h1>Dylan Ipsum</h1>
@@ -408,6 +409,6 @@ $: mobile = vw < 1000
 			<span class="border">Brody Smith 👨‍💻</span> had a whopping good time building this website. If you have any ideas to make this site better, please reach out on his <a href="https://brody.fyi/">website</a>.
 		</p>
 		<p>Dylan Ipsum is also available as an <a href="https://github.com/brodysmith1/dylan-ipsum-npm" target="_blank">npm package</a>, if that's your thing.</p>
-		<a class="bare" download href="/downloads/songs.json"><button class="border" style="margin-top: 1.75rem;">Download json file of all lyrics &darr;</button></a>
+		<a class="bare" download href="/tools/dylan-ipsum/downloads/songs.json"><button class="border" style="margin-top: 1.75rem;">Download json file of all lyrics &darr;</button></a>
 	</Modal>
 {/if}
