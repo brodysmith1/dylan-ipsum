@@ -227,7 +227,7 @@ $: mobile = vw < 1000
 				href="javascript:;"
 			>About</a>
 			<a href="https://github.com/brodysmith1/dylan-ipsum" target="_blank">Github</a>
-			<a href="/tools">brody.fyi</a>
+			<a href="/tools">More tools</a>
 		</nav>
 		
 		<hr>
