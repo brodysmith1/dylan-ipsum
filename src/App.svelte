@@ -196,10 +196,9 @@ $: mobile = vw < 1000
 
 <aside class:active>
 
-	<a
+	<div
 		id="title"
 		class="flex-center flex bare"
-		data-tooltip="Back to brody.fyi"
 		href="/"
 	>
 		<h1>Dylan Ipsum</h1>
@@ -214,7 +213,7 @@ $: mobile = vw < 1000
 		  <path d="M114 184l1 3v4-1 1l16-4c2-2 3-2 4-1l5-2c-8-5-5-9 1-14 4 11 34-29 35-37-9 1-15 12-22 17v0c-6 0-2 14-12 16-3 4-5 0-8 0-4 5-1 17-10 14l-1 1v1h-1l-1-2 2 1h1c-6-7-11-10-10 1-4-4 1-10 3-15l1 5 6-3-5-5 6-1c-6-6-9 3-15 4l1-2c-5 0-9 2-13 3l-1-2c3 0 6-3 8-5h-1 1l4-3v-1-1 1l9-2-2-2c6-2 6-7 7-13 0-3-3-10 2-10 0-2-1-3-3-4 2-6-3-7-1-13h-2v0h2l1-1s1 0 0 0h1l-2-2-8-7-1 1v2-2l1-1v-2h-2c1-4-4-5-7-8-2-2-4 2-7 2v2c4 4-2 13-5 14-10 0-15-25-22-18-6 11-16 36 7 22h-1 1c7 5-20 14 9 21-15 12-1 10 6 17-5 3-2 7 0 10h-1l5 5c-9-3-8-13-16-18-2-1-2-5-3-8 1-5-4-6-7-8l1-2-2-5-1 1v-1l-1-1c-4-3-9-6-10-12v-1 1l-2-2 2-1c0-2 0-4 2-5h-2l6-13-1-2v-1 1c4-4 1-8 0-13h-1 1l-1-7c-1-2 2-7-3-7l4-2c-5-1-14-14-7-14-6-9 0-19 3-28l2-5h-1 1c3-5 9-9 10-15a99 99 0 0044 192v-8zm5-14v0zm2-29zm-1-20zm-5 14h0zm2-2zm1 14v1-1zm0-29h-1 1zm-1-2v-1 1zm0-4h-2 2zm-2 13zm-1 16zm-1 11v0zm-2-44c1 0 1 0 0 0zm-2 21v-1 1-1 1zm0-29h-1 1zm0 4h-1 1-1 1zm-4 44l-1 1v-1h1zm-3-50l-1-1c2-2 3-1 1 1zm-25 25l-1-2 1 2zm2-13zm0 3v-1 1zm2 4l-1-1h1v1zm0-5h1-1zm5 34v-1l2 2c-1 1-1 0-2-1zm5 1h-1 1zM54 19v0zm-1 12zM39 62v-1 1zm6-21zm6 4l-1-1h1v1zm3 14v0zm-1 10c1-1 1-2 2-1-1 1-1 2-2 1zm8 59zm6 14zm0 1v-1 1zm6-5zm23 32h-1l1-3c0 1 0 0 0 0v3zm16 3l-1-1 1 1v-1l-1-1h1v2zm0-5zM126 174zM114 161zM118 154z"/>
 		  <path d="M123 144h1l-1-1v1zM122 158h0zM115 163l-1-2v2h1zM63 68l-2 2c1-1 3-1 2-2zM123 173c1-1 0-1 0 0zM55 48zM124 139zM87 155c-1 0 0 1 0 0zM123 177v0zM119 174zM140 175zM123 177z"/>
 		</svg>
-	</a>
+	</div>
 	
 	<a id="coffee" class="bare upper" href="https://www.buymeacoffee.com/brods" target="_blank">
 		One more cup of coffee
@@ -228,6 +227,7 @@ $: mobile = vw < 1000
 				href="javascript:;"
 			>About</a>
 			<a href="https://github.com/brodysmith1/dylan-ipsum" target="_blank">Github</a>
+			<a href="/tools">brody.fyi</a>
 		</nav>
 		
 		<hr>
