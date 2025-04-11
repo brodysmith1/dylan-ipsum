@@ -6,7 +6,7 @@
 <div
   class="modal-screen"
   on:click={close}
-  transition:fade={{duration: 150}}
+  transition:fade|global={{duration: 150}}
 >
   <div
     class="modal red scroller"

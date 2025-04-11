@@ -357,7 +357,7 @@ $: mobile = vw < 1000
 	<div
 		id="tooltip"
 		bind:this={tooltip.element}
-		out:fade={{duration: 300, delay: tooltip.duration - 200}}
+		out:fade|global={{duration: 300, delay: tooltip.duration - 200}}
 	>
 		{tooltip.text}
 	</div>
